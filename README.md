@@ -6,7 +6,7 @@
 
 ## Integrantes:
 
-   * LUIGI ALVA SANCHEZ - Actividad 1  48584750@mail.isil.pe
+   * LUIGUI ALVA SANCHEZ - Actividad 1  48584750@mail.isil.pe
    * MARIA FERNANDA LEON CATALAN - Actividad 2 75443768@mail.isil.pe
    * NADIA MABEL VINCES ASCA - Actividad 3 70474181@mail.isil.pe
    * JEAN LUC MELLET DEL CASTILLO - Actividad 4 73994056@mail.isil.pe
