@@ -25,10 +25,10 @@ Implementar y validar soluciones avanzadas en SQL Server mediante subconsultas c
 Dividimos el desarrollo en los siguientes puntos:
  
 
-+ ACTIVIDAD 02
++ ACTIVIDAD 02 (PENDIENTE POR COMPLETAR)
 PRIMERA TAREA:
 
 Se migran los pedidos en estado CONFIRMADO anteriores al 01/01/2026 hacia la tabla PedidoHistorico2025. 
 La comprobación cruzada valida la paridad exacta entre origen y destino (7 registros esperados vs 7 registros cargados). La subconsulta con NOT EXISTS garantiza la idempotencia del proceso: ante ejecuciones repetidas, el sistema inserta 0 filas sin generar conflictos con la clave primaria. Asimismo, se omitió la propiedad IDENTITY en PedidoID para conservar el identificador de venta original y mantener la trazabilidad histórica. 
-
+(pendiente)
 <img width="822" height="265" alt="image" src="https://github.com/user-attachments/assets/98dbe22d-1154-404f-b91a-ad1ad74b4806" />
