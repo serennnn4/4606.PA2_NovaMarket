@@ -239,7 +239,7 @@ SELECT * FROM dbo.vw_ClientesSinCompra2026;                          -- 11, 13, 
 
 ## Video de exposición
 
-Video de YouTube: [ pegar aquí el enlace ]
+Video de YouTube: [https://www.youtube.com/watch?v=HjiaVX6LuHk]
 
 | Integrante | Parte | Inicio | Fin |
 |---|---|---|---|
