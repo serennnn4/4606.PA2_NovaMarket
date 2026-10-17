@@ -304,64 +304,30 @@ WHERE NOT EXISTS (SELECT 1 FROM dbo.Pedido p WHERE p.PedidoID = d.PedidoID)
    OR NOT EXISTS (SELECT 1 FROM dbo.Producto pr WHERE pr.ProductoID = d.ProductoID);
 GO
 
+/* ============================================================
+   CASOS DE PRUEBA YA CUBIERTOS POR LOS DATOS BASE
+   (para que cada actividad sepa con qué contrastar sus resultados)
 
-
-/* ===================================================================
-   ACTIVIDAD 01 | SESIÓN 04 
-   ================================================================= */
-
- ---- A. Segmentación con EXISTS y NOT EXISTS -----
-/***    Para listar los clientes que tengan al menos un pedido CONFIRMADO de productos de Redes 
-        durante 2026 y que NO tengan pedidos CONFIRMADO de productos de Seguridad durante 2026 
-        (evitando duplicados mediante EXISTS y NOT EXISTS), se utiliza la siguiente consulta:  ***/
-
-SELECT DISTINCT c.ClienteID, c.Nombre, c.Ciudad
-FROM dbo.Cliente c
-WHERE EXISTS (
-
-    -- Al menos un pedido CONFIRMADO de Redes en 2026
-    SELECT 1 
-    FROM dbo.Pedido p
-    JOIN dbo.DetallePedido d ON p.PedidoID = d.PedidoID
-    JOIN dbo.Producto pr ON d.ProductoID = pr.ProductoID
-    WHERE p.ClienteID = c.ClienteID
-      AND p.Estado = 'CONFIRMADO'
-      AND YEAR(p.FechaPedido) = 2026
-      AND pr.CategoriaID = 1 -- Categoría Redes
-)
-AND NOT EXISTS (
-
-    -- Sin pedidos CONFIRMADO de Seguridad en 2026
-    SELECT 1 
-    FROM dbo.Pedido p
-    JOIN dbo.DetallePedido d ON p.PedidoID = d.PedidoID
-    JOIN dbo.Producto pr ON d.ProductoID = pr.ProductoID
-    WHERE p.ClienteID = c.ClienteID
-      AND p.Estado = 'CONFIRMADO'
-      AND YEAR(p.FechaPedido) = 2026
-      AND pr.CategoriaID = 2 -- Categoría Seguridad
-);
-
----- B. Subconsulta correlacionada ----
-/***    Para listar los productos (ProductoID, Nombre, categoría, PrecioLista) junto con 
-        el promedio de precio de su propia categoría, filtrando únicamente aquellos cuyo 
-        PrecioLista sea estrictamente superior a dicho promedio:    ***/
-
-SELECT 
-    pr.ProductoID, 
-    pr.Nombre, 
-    cat.Nombre AS Categoria, 
-    pr.PrecioLista,
-    (
-        SELECT AVG(p_sub.PrecioLista) 
-        FROM dbo.Producto p_sub 
-        WHERE p_sub.CategoriaID = pr.CategoriaID
-    ) AS PromedioCategoria
-FROM dbo.Producto pr
-JOIN dbo.Categoria cat ON pr.CategoriaID = cat.CategoriaID
-WHERE pr.PrecioLista > (
-    SELECT AVG(p_sub.PrecioLista) 
-    FROM dbo.Producto p_sub 
-    WHERE p_sub.CategoriaID = pr.CategoriaID
-);
-
+   S04-A  Redes CONFIRMADO 2026 y NO Seguridad CONFIRMADO 2026:
+          clientes 1, 2, 3, 4 y 12.
+            - el 4 compró Seguridad solo en 2025 (el filtro de año lo deja pasar)
+            - el 3 tiene Seguridad PENDIENTE (no cuenta, sigue incluido)
+            - el 12 tiene Seguridad ANULADO (no cuenta, sigue incluido)
+          Compraron ambas categorías en 2026: clientes 5, 6 y 7.
+          Solo Seguridad en 2026: clientes 8 y 9.
+   S04-B  Promedio por categoría: Redes 271.54, Seguridad 831.75,
+          Accesorios 39.23. El Cable UTP (389.00) queda por debajo del
+          promedio general de la tienda pero por encima del de su categoría.
+   S05-A  Pedidos CONFIRMADO anteriores al 01/01/2026: 7 (pedidos 1 a 7).
+   S05-B  Productos de Redes activos con Stock >= 10: 1, 2 y 3.
+          Quedan fuera el 4 (stock 9), el 5 (inactivo) y todo lo de
+          otras categorías (el Kit CCTV ya trae oferta propia).
+   S05-C  BORRADOR sin detalle: pedidos 34 a 38 (5 filas). Los borradores
+          39 y 40 tienen detalle y deben permanecer.
+   S06-B  Sin pedidos CONFIRMADO en 2026: clientes 11, 13, 14, 15 y 16.
+            - el 11 tiene un CONFIRMADO de 2025 y un PENDIENTE
+            - el 13 solo tiene pendiente y borradores
+            - el 14 y el 16 no tienen ningún pedido
+   S07    Clientes de prueba del reporte: 10, 12, 13 y 14 (la ampliación
+          de S07 solo agrega pedidos a los clientes 1 a 9).
+   ============================================================ */
