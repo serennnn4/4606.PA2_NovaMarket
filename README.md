@@ -33,14 +33,12 @@ Dividimos el desarrollo en los siguientes puntos:
 
 
 
-+ ACTIVIDAD 02 (PENDIENTE POR COMPLETAR)
-PRIMERA TAREA:
++ ACTIVIDAD 02 
+Validación de Paridad Origen vs Destino
+Se realiza un conteo cruzado entre la tabla transaccional dbo.Pedido y la tabla destino dbo.PedidoHistorico2025. El resultado demuestra consistencia total en la migración histórica: 
+Exactamente, 7 pedidos confirmados anteriores al 01/01/2026 esperados contra 7 registros efectivamente cargados. La omisión de la propiedad IDENTITY en PedidoID garantiza la trazabilidad al conservar los identificadores generados originalmente en origen.
+<img width="931" height="290" alt="image" src="https://github.com/user-attachments/assets/bae22c75-7819-407e-a317-03bcbb63a8ca" />
 
-Se migran los pedidos en estado CONFIRMADO anteriores al 01/01/2026 hacia la tabla PedidoHistorico2025. 
-La comprobación cruzada valida la paridad exacta entre origen y destino (7 registros esperados vs 7 registros cargados). La subconsulta con NOT EXISTS garantiza la idempotencia del proceso: ante ejecuciones repetidas, el sistema inserta 0 filas sin generar conflictos con la clave primaria.
-Además, se omitió la propiedad IDENTITY en PedidoID para conservar el identificador de venta original y mantener la trazabilidad histórica. 
-(pendiente)
-<img width="822" height="265" alt="image" src="https://github.com/user-attachments/assets/98dbe22d-1154-404f-b91a-ad1ad74b4806" />
 
 
 + ACTIVIDAD 03: Vistas SQL y reutilización de consultas, se crearon dos vistas para facilitar la consulta de información en NovaMarket.
