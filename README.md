@@ -48,8 +48,10 @@ Se crearon dos vistas para facilitar la consulta de información en NovaMarket
 
 A) Vista de ventas por categoría y mes: Se creó vw_VentasCategoriaMes para resumir las unidades vendidas y los montos totales por categoría y mes, considerando únicamente pedidos confirmados.
 <img width="790" height="481" alt="c15d9b3c-14f5-4292-a9a6-4a9451aa36dd" src="https://github.com/user-attachments/assets/8e689887-045f-49f3-8a76-72c3b226d129" />
+
 B) Vista de clientes sin CONFIRMAR: Se creó vw_ClientesSinCompra2026 para identificar a los clientes que no realizaron pedidos confirmados durante el año 2026. Se verificaron los resultados mediante una consulta alternativa.
 <img width="673" height="491" alt="b9db2d4d-8dfb-4577-a698-a21971d5bbad" src="https://github.com/user-attachments/assets/bed07e28-f652-4a44-b16d-7dcf047108e1" />
+
 C) Consumo y verificación: Se consultaron ambas vistas y se comprobaron los montos de ventas de febrero (Redes: 1737.60) y mayo (Accesorios: 150.30) con consultas a las tablas originales. Las vistas permiten reutilizar la lógica y facilitar el mantenimiento del código.
 <img width="655" height="505" alt="01b3c8b9-eb79-4c6b-9b45-a7092d0fcb3d" src="https://github.com/user-attachments/assets/285c4d71-2fcd-42c0-a3b1-046201167294" />
 
