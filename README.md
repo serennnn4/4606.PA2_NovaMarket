@@ -10,7 +10,7 @@ Examen PA2, sesiones 04 a 07 · Microsoft SQL Server
 | Rodrigo Gómez Carrasco · 72207949@mail.isil.pe | [@rdkhub](https://github.com/rdkhub) | Base de datos | `00 esquema y datos base.sql` | Esquema de las 5 tablas con PK, FK, UNIQUE, CHECK y DEFAULT; datos base (16 clientes, 12 productos, 40 pedidos, 86 detalles) con los casos de prueba que usan S04 a S07 |
 | Luigui Alva Sánchez · 48584750@mail.isil.pe | @usuario | Actividad 1 · S04 | `s04_subconsultas.sql` | Segmentación con EXISTS / NOT EXISTS, subconsulta correlacionada por categoría y análisis de casos |
 | María Fernanda León Catalán · 75443768@mail.isil.pe | @usuario | Actividad 2 · S05 | `s05_mantenimiento.sql` | Corte histórico con INSERT ... SELECT idempotente, UPDATE de oferta no acumulativo y DELETE protegido, con OUTPUT y comprobaciones antes/después |
-| Nadia Mabel Vinces Asca · 70474181@mail.isil.pe | @usuario | Actividad 3 · S06 | `s06_vistas.sql` | Vistas `vw_VentasCategoriaMes` y `vw_ClientesSinCompra2026`, consulta alternativa y contraste de dos totales mensuales |
+| Nadia Mabel Vinces Asca · 70474181@mail.isil.pe | @whitecatador | Actividad 3 · S06 | `s06_vistas.sql` | Vistas `vw_VentasCategoriaMes` y `vw_ClientesSinCompra2026`, consulta alternativa y contraste de dos totales mensuales |
 | Jean Luc Mellet del Castillo · 73994056@mail.isil.pe | @usuario | Actividad 4 · S07 | `s07_datos_prueba.sql`, `s07_reporte_clientes.sql` | Ampliación a más de 200 pedidos y 400 detalles, reporte de ventas por cliente y matriz de 4 pruebas |
 
 ## Contexto del caso
