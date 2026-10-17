@@ -43,8 +43,7 @@ Además, se omitió la propiedad IDENTITY en PedidoID para conservar el identifi
 <img width="822" height="265" alt="image" src="https://github.com/user-attachments/assets/98dbe22d-1154-404f-b91a-ad1ad74b4806" />
 
 
-+ ACTIVIDAD 03: Vistas SQL y reutilización de consultas
-Se crearon dos vistas para facilitar la consulta de información en NovaMarket
++ ACTIVIDAD 03: Vistas SQL y reutilización de consultas, se crearon dos vistas para facilitar la consulta de información en NovaMarket.
 
 A) Vista de ventas por categoría y mes: Se creó vw_VentasCategoriaMes para resumir las unidades vendidas y los montos totales por categoría y mes, considerando únicamente pedidos confirmados.
 <img width="790" height="481" alt="c15d9b3c-14f5-4292-a9a6-4a9451aa36dd" src="https://github.com/user-attachments/assets/8e689887-045f-49f3-8a76-72c3b226d129" />
