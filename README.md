@@ -34,24 +34,25 @@ Dividimos el desarrollo en los siguientes puntos:
 
 
 + ACTIVIDAD 02 
-* PRIMERA TAREA - Validación de Paridad Origen vs Destino:
-Se realiza un conteo cruzado entre la tabla transaccional dbo.Pedido y la tabla destino dbo.PedidoHistorico2025. El resultado demuestra consistencia total en la migración histórica: 
-Exactamente, 7 pedidos confirmados anteriores al 01/01/2026 esperados contra 7 registros efectivamente cargados. La omisión de la propiedad IDENTITY en PedidoID garantiza la trazabilidad al conservar los identificadores generados originalmente en origen.
+* Validación de Paridad Origen vs Destino:
+Se realiza un conteo cruzado entre la tabla transaccional dbo.Pedido y la tabla histórica dbo.PedidoHistorico2025. El resultado confirma que los 7 pedidos calificados en origen (estado 'CONFIRMADO' y fecha anterior al 01/01/2026) migraron en su totalidad al destino. Además, la tabla histórica se creó omitiendo la propiedad IDENTITY en PedidoID para conservar el identificador de venta original y garantizar su trazabilidad
+
 <img width="931" height="290" alt="image" src="https://github.com/user-attachments/assets/bae22c75-7819-407e-a317-03bcbb63a8ca" />
 
 
-* SEGUNDA TAREA - Prueba de Idempotencia y Cero Duplicados 
-Se reejecuta el bloque de inserción para evaluar el comportamiento ante ejecuciones múltiples. La cláusula NOT EXISTS detecta la existencia previa de los registros y filtra la totalidad de las filas, insertando 0 registros nuevos y evitando violaciones de la clave primaria (PK_PedidoHistorico2025). El conteo posterior certifica que la tabla se mantiene en 7 filas, sin duplicados ni registros pendientes.
+* Prueba de Idempotencia y Cero Duplicados:
+Se vuelve a ejecutar la carga para verificar que el script sea seguro ante ejecuciones repetidas. Gracias a la subconsulta con NOT EXISTS, el sistema reconoce que los registros ya existen y no vuelve a insertarlos, evitando errores por clave primaria duplicada. Las tres consultas de validación demuestran que: el total se mantiene exactamente en 7 pedidos, no existen identificadores duplicados y quedan 0 pedidos pendientes de migrar.
 <img width="932" height="1000" alt="image" src="https://github.com/user-attachments/assets/2624083d-8eb9-482e-8417-6c185925c06c" />
 
 
-* TERCERA TAREA - Comprobación Previa de Alcance:
-Se evalúan las tres condiciones solicitadas por el negocio antes de modificar los datos: pertenencia a la categoría 'Redes' (CategoriaID = 1), producto operativo (Activo = 1) y disponibilidad suficiente (Stock >= 10). La consulta demuestra que únicamente los productos con ID 1, 2 y 3 califican para el descuento comercial. El producto 4 queda excluido por rotación crítica (Stock = 9), el producto 5 por descatalogación (Activo = 0), y los productos restantes por pertenecer a categorías distintas.
+* Comprobación Previa de Alcance (UPDATE):
+
+Antes de alterar los precios, se evalúan las tres reglas del negocio: categoría 'Redes' (CategoriaID = 1), producto operativo (Activo = 1) y disponibilidad suficiente (Stock >= 10). La consulta demuestra que únicamente los productos con ID 1, 2 y 3 cumplen todas las condiciones. Quedan excluidos el producto 4 por stock insuficiente (tiene 9 unidades), el producto 5 por encontrarse inactivo, y todos los artículos de Seguridad y Accesorios.
 <img width="742" height="752" alt="image" src="https://github.com/user-attachments/assets/fb040328-d67c-463d-9ca0-496812151506" />
 
-* CUARTA TAREA - Ejecución y Comprobación de No Acumulabilidad (Tarea B):
+* Ejecución del UPDATE con cláusula OUTPUT:
 
-Se aplicó el 10 % de descuento formulado como ROUND(pr.PrecioLista * 0.90, 2). La cláusula OUTPUT certifica que el cálculo se basa en la columna fija PrecioLista y no sobre PrecioOferta, haciendo que la operación sea determinista: en ejecuciones sucesivas, el precio anterior y el posterior resultan idénticos, evitando que el descuento se acumule y degrade el margen del producto.
+Se aplica el 10 % de descuento fijando PrecioOferta al 90 % del PrecioLista (ROUND(pr.PrecioLista * 0.90, 2)) únicamente para los productos de Redes calificados. La cláusula OUTPUT audita el cambio en tiempo real: demuestra que los productos 1, 2 y 3 no tenían oferta previa (PrecioOferta_Anterior = NULL) y reciben su nuevo precio descontado, respetando la regla de integridad de ser menor a su precio de lista.
 
 <img width="878" height="500" alt="image" src="https://github.com/user-attachments/assets/ed3353a9-76b4-468a-b0aa-184c2b3290f0" />
 
