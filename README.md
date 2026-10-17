@@ -42,19 +42,25 @@ Se realiza un conteo cruzado entre la tabla transaccional dbo.Pedido y la tabla 
 
 * Prueba de Idempotencia y Cero Duplicados:
 Se vuelve a ejecutar la carga para verificar que el script sea seguro ante ejecuciones repetidas. Gracias a la subconsulta con NOT EXISTS, el sistema reconoce que los registros ya existen y no vuelve a insertarlos, evitando errores por clave primaria duplicada. Las tres consultas de validación demuestran que: el total se mantiene exactamente en 7 pedidos, no existen identificadores duplicados y quedan 0 pedidos pendientes de migrar.
+
 <img width="932" height="1000" alt="image" src="https://github.com/user-attachments/assets/2624083d-8eb9-482e-8417-6c185925c06c" />
 
 
 * Comprobación Previa de Alcance (UPDATE):
 
 Antes de alterar los precios, se evalúan las tres reglas del negocio: categoría 'Redes' (CategoriaID = 1), producto operativo (Activo = 1) y disponibilidad suficiente (Stock >= 10). La consulta demuestra que únicamente los productos con ID 1, 2 y 3 cumplen todas las condiciones. Quedan excluidos el producto 4 por stock insuficiente (tiene 9 unidades), el producto 5 por encontrarse inactivo, y todos los artículos de Seguridad y Accesorios.
+
 <img width="742" height="752" alt="image" src="https://github.com/user-attachments/assets/fb040328-d67c-463d-9ca0-496812151506" />
+
+
 
 * Ejecución del UPDATE con cláusula OUTPUT:
 
 Se aplica el 10 % de descuento fijando PrecioOferta al 90 % del PrecioLista (ROUND(pr.PrecioLista * 0.90, 2)) únicamente para los productos de Redes calificados. La cláusula OUTPUT audita el cambio en tiempo real: demuestra que los productos 1, 2 y 3 no tenían oferta previa (PrecioOferta_Anterior = NULL) y reciben su nuevo precio descontado, respetando la regla de integridad de ser menor a su precio de lista.
 
 <img width="878" height="500" alt="image" src="https://github.com/user-attachments/assets/ed3353a9-76b4-468a-b0aa-184c2b3290f0" />
+
+
 
 * Demostración de Cálculo No Acumulativo:
 
