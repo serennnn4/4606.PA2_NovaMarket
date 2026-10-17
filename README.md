@@ -66,13 +66,15 @@ Se aplica el 10 % de descuento fijando PrecioOferta al 90 % del PrecioLista (ROU
 
 Se repite la ejecución del UPDATE para comprobar que el descuento no se aplique de forma acumulativa sobre precios previamente rebajados. La cláusula OUTPUT evidencia que las columnas PrecioOferta_AntesDeRepetir y PrecioOferta_DespuesDeRepetir devuelven cifras idénticas. Esto certifica que el cálculo se formuló de manera fija sobre PrecioLista y no sobre PrecioOferta, manteniendo los precios estables y consistentes ante múltiples ejecuciones del script.
 
-<img width="729" height="489" alt="image" src="https://github.com/user-attachments/assets/81e60b5e-12eb-4002-aa6d-be0a24b5a4cd" />
+<img width="930" height="476" alt="image" src="https://github.com/user-attachments/assets/5849fc2a-e149-47dd-8f40-13c2313aa7b3" />
+
 
 
 * TAREA C — Depuración Protegida (DELETE) y Validación de Integridad:
 Se eliminaron únicamente los pedidos en estado BORRADOR que no registraban líneas de detalle hijas, empleando una subconsulta con NOT EXISTS hacia DetallePedido. La cláusula OUTPUT certifica la depuración exacta de los 5 pedidos huérfanos (IDs 34 al 38). La comprobación posterior confirma que los borradores con compras reales asociadas (IDs 39 y 40) se mantuvieron intactos, y el conteo general demuestra que los 33 pedidos válidos (CONFIRMADO, PENDIENTE y ANULADO) no sufrieron modificaciones.
 
-<img width="913" height="908" alt="image" src="https://github.com/user-attachments/assets/14989b35-0e0d-4b76-b9da-735067ec05fb" />
+<img width="935" height="1049" alt="image" src="https://github.com/user-attachments/assets/b1f3cfca-5783-4d29-8e23-3045032de8d7" />
+
 
 
 + ACTIVIDAD 03: Vistas SQL y reutilización de consultas, se crearon dos vistas para facilitar la consulta de información en NovaMarket.
